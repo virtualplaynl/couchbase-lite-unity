@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsMac>false</IsMac>
+    <IsMac Condition=" '$(OS)' == 'Unix' AND Exists('/Library/Frameworks') ">true</IsMac>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configurations>Debug;Release;Packaging;PackagingDebug</Configurations>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Couchbase.Lite.Support.NetDesktop</RootNamespace>
+    <AssemblyName>Couchbase.Lite.Support.NetDesktop</AssemblyName>
+    <CopyNuGetImplementations>True</CopyNuGetImplementations>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Packaging|AnyCPU'">
+    <DocumentationFile>bin\Packaging\netcoreapp2.0\Couchbase.Lite.Support.NetDesktop.xml</DocumentationFile>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PackagingDebug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SourceLink.Embed.AllSourceFiles" Version="2.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Couchbase.Lite\Couchbase.Lite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="desktop.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Couchbase.Lite\Properties\DynamicAssemblyInfo.tt">
+      <Link>Properties\DynamicAssemblyInfo.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DynamicAssemblyInfo.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" ('$(OS)' == 'Windows_NT' OR $(Configuration.Contains('Packaging'))) AND '$(JUST_CSHARP)' == '' ">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\vendor\couchbase-lite-core\build_cmake\x86\RelWithDebInfo\LiteCore.dll">
+      <Link>x86\LiteCore.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\vendor\couchbase-lite-core\build_cmake\x86\RelWithDebInfo\LiteCore.pdb">
+      <Link>x86\LiteCore.pdb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\vendor\couchbase-lite-core\build_cmake\x64\RelWithDebInfo\LiteCore.dll">
+      <Link>x64\LiteCore.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\vendor\couchbase-lite-core\build_cmake\x64\RelWithDebInfo\LiteCore.pdb">
+      <Link>x64\LiteCore.pdb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Couchbase.Lite\Properties\DynamicAssemblyInfo.cs">
+      <Link>Properties\DynamicAssemblyInfo.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DynamicAssemblyInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Base_native.cs" Link="Support\LiteCore\C4Base_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4BlobStore_native.cs" Link="Support\LiteCore\C4BlobStore_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Database_native.cs" Link="Support\LiteCore\C4Database_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4DocEnumerator_native.cs" Link="Support\LiteCore\C4DocEnumerator_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Document+Fleece_native.cs" Link="Support\LiteCore\C4Document+Fleece_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Document_native.cs" Link="Support\LiteCore\C4Document_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4ExpiryEnumerator_native.cs" Link="Support\LiteCore\C4ExpiryEnumerator_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Observer_native.cs" Link="Support\LiteCore\C4Observer_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Query_native.cs" Link="Support\LiteCore\C4Query_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Replicator_native.cs" Link="Support\LiteCore\C4Replicator_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\C4Socket_native.cs" Link="Support\LiteCore\C4Socket_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\Fleece_native.cs" Link="Support\LiteCore\Fleece_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\Common\Misc_native.cs" Link="Support\LiteCore\Misc_native.cs" />
+    <Compile Include="..\LiteCore\src\LiteCore.Shared\Interop\LiteCore_impl.cs" Link="Support\LiteCore\LiteCore_impl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Support\LiteCore\" />
+  </ItemGroup>
+</Project>
